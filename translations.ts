@@ -1,14 +1,14 @@
 import { Translation } from "./library";
 
-const translations = {
+export const translations = {
     en: {
         hello: `hi`,
-        helloName: ({name: string}) => `hi ${name}`,
+        helloName: ({name}: {name: string}) => `hi ${name}`,
     },
     de: {
         hello: `hallo`,
-        helloName: ({name: string}) => `hallo ${name}`,
+        helloName: ({name}: {name: string}) => `hallo ${name}`,
     }
 }
 
-export const { TranslationProvider, useTranslations, Translate } = new Translation(translations)
+export const { TranslationProvider, useTranslations, Translate } = new Translation(translations.de)

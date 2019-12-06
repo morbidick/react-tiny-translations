@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { TranslationProvider, Translate, useTranslations } from "./translations";
+import { TranslationProvider, Translate, useTranslations, translations } from "./translations";
 
 const main: FunctionComponent = () => {
     return (
-        <TranslationProvider value="de">
-            <Translate key="helloName" name="blubb"/>
+        <TranslationProvider value={translations.de}>
+            <Translate key="hello" name="test"/>
             <Welcome />
         </TranslationProvider>
     )
