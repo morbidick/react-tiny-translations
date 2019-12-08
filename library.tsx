@@ -1,13 +1,13 @@
 import React, { useContext, FunctionComponent } from 'react'
 
-type transFunc = (props: any) => string
-function transFuncCheck(t: string | transFunc): t is transFunc {
+type transFunc = (props: any) => string | number | JSX.Element
+function transFuncCheck(t: string | number | transFunc): t is transFunc {
     return typeof t === "function"
 } 
 
-type ArgType<T> = T extends (args: infer A) => string ? A : {}
+type PropsType<T> = T extends (args: infer P) => string ? P : {}
 
-interface Translations {[key: string]: string | transFunc}
+interface Translations {[key: string]: string | number | transFunc}
 
 export class Translation<T extends Translations> {
     private translationContext: React.Context<T>
@@ -20,7 +20,7 @@ export class Translation<T extends Translations> {
     public useTranslations = (): T => {
         return useContext(this.translationContext)
     }
-    public Translate = <K extends keyof T>({key, ...args}: {key: K} & ArgType<T[K]>) => {
+    public Translate = <K extends keyof T>({key, ...args}: {key: K} & PropsType<T[K]>): JSX.Element => {
         const t = this.useTranslations()[key]
         if (typeof t === "string") {
             return <>{t}</>

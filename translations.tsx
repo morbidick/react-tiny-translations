@@ -4,6 +4,7 @@ export const translations = {
     en: {
         hello: `hi`,
         helloName: ({name}: {name: string}) => `hi ${name}`,
+        helloUrgent: ({name}: {name: string}) => <>hello<b>{name}</b></>
     },
     de: {
         hello: `hallo`,
@@ -11,4 +12,4 @@ export const translations = {
     }
 }
 
-export const { TranslationProvider, useTranslations, Translate } = new Translation(translations.de)
+export const { TranslationProvider, useTranslations, Translate } = new Translation(translations.en)
