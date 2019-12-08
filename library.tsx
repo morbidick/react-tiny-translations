@@ -5,19 +5,11 @@ function transFuncCheck(t: string | transFunc): t is transFunc {
     return typeof t === "function"
 } 
 
-type ArgType<T> = T extends (args: infer A) => string ? A : never
-
-interface Args {
-    blubb:string, zwo: number 
-}
-
-const test = ({blubb, zwo}: Args) => "hi"
-
-type b = ArgType<typeof test>
+type ArgType<T> = T extends (args: infer A) => string ? A : {}
 
 interface Translations {[key: string]: string | transFunc}
 
-export class Translation<T extends Translations, K extends keyof T> {
+export class Translation<T extends Translations> {
     private translationContext: React.Context<T>
     constructor(translations: T) {
         this.translationContext = React.createContext(translations)
@@ -28,8 +20,7 @@ export class Translation<T extends Translations, K extends keyof T> {
     public useTranslations = (): T => {
         return useContext(this.translationContext)
     }
-    // Translate should be generic with something like U in keysof T and using the Arguments of T[U] for extra args
-    public Translate = ({key, ...args}: {key: K} & ArgType<T[K]>) => {
+    public Translate = <K extends keyof T>({key, ...args}: {key: K} & ArgType<T[K]>) => {
         const t = this.useTranslations()[key]
         if (typeof t === "string") {
             return <>{t}</>
