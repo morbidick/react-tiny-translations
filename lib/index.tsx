@@ -1,4 +1,4 @@
-import React, { useContext, FunctionComponent } from 'react'
+import React, { useContext } from 'react'
 
 type transFunc = (props: any) => string | number | JSX.Element
 function transFuncCheck(t: string | number | transFunc): t is transFunc {
@@ -7,7 +7,7 @@ function transFuncCheck(t: string | number | transFunc): t is transFunc {
 
 type PropsType<T> = T extends (args: infer P) => string ? P : {}
 
-interface Translations {[key: string]: string | number | transFunc}
+type Translations = {[key: string]: string | number | transFunc}
 
 export class Translation<T extends Translations> {
     private translationContext: React.Context<T>
